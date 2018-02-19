@@ -59,7 +59,7 @@
           <ons-input id="repeatPassword" modifier="underbar" type="password" placeholder="Repeat Password" float></ons-input>
         </p>
         <p style="margin-top: 30px;">
-          <ons-button onclick="login()">Register</ons-button>
+          <ons-button onclick="register()">Register</ons-button>
         </p>
       </div>
     </ons-page>
