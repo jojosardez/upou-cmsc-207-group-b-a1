@@ -2,8 +2,8 @@
 -- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 172.17.0.1:32828
--- Generation Time: Feb 19, 2018 at 02:23 PM
+-- Host: 172.17.0.1:32774
+-- Generation Time: Feb 19, 2018 at 11:44 PM
 -- Server version: 5.7.21
 -- PHP Version: 7.1.9
 
@@ -31,48 +31,30 @@ USE `assignment1db`;
 --
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(500) NOT NULL,
   `email` varchar(100) NOT NULL,
   `loginattempts` int(11) NOT NULL,
   `admin` tinyint(4) NOT NULL,
+  `verified` tinyint(4) NOT NULL,
   `active` tinyint(4) NOT NULL,
   `datecreated` datetime NOT NULL,
-  `datemodified` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `datemodified` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username_2` (`username`),
+  UNIQUE KEY `email_2` (`email`),
+  KEY `username` (`username`),
+  KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `loginattempts`, `admin`, `active`, `datecreated`, `datemodified`) VALUES
-(1, 'admin', '$2y$10$njXNqzEtpOprGUMTMpwJWex7j1RaZvrsctb6rN4zChTUW.W/sZws.', 'admin@admin.com', 0, 1, 1, '2018-02-17 00:00:00', '2018-02-17 00:00:00');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username_2` (`username`),
-  ADD UNIQUE KEY `email_2` (`email`),
-  ADD KEY `username` (`username`),
-  ADD KEY `email` (`email`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `loginattempts`, `admin`, `verified`, `active`, `datecreated`, `datemodified`) VALUES
+(1, 'admin', '$2y$10$yUDNMg7DG7/Vpj00l6/yZ.htq2jg5jyAh97yItc95XdPKtt9X2zDO', 'admin@admin.com', 0, 1, 1, 1, '2018-02-17 00:00:00', '2018-02-17 00:00:00');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
