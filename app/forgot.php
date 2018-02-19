@@ -21,6 +21,9 @@
           <ons-list-item onclick="location.href = 'forgot.php';" tappable>
             Forgot Password
           </ons-list-item>
+          <ons-list-item onclick="location.href = 'change.php';" tappable>
+            Change Password
+          </ons-list-item>
           <ons-list-item onclick="location.href = 'register.php';" tappable>
             Register
           </ons-list-item>
