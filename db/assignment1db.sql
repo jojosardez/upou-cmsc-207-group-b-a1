@@ -2,8 +2,8 @@
 -- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 192.168.99.100:32795
--- Generation Time: Feb 17, 2018 at 07:57 AM
+-- Host: 172.17.0.1:32828
+-- Generation Time: Feb 19, 2018 at 02:23 PM
 -- Server version: 5.7.21
 -- PHP Version: 7.1.9
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `assignment1db`
 --
+CREATE DATABASE IF NOT EXISTS `assignment1db` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `assignment1db`;
 
 -- --------------------------------------------------------
 
@@ -28,11 +30,13 @@ SET time_zone = "+00:00";
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(500) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `loginattempts` int(11) NOT NULL,
   `admin` tinyint(4) NOT NULL,
   `active` tinyint(4) NOT NULL,
   `datecreated` datetime NOT NULL,
@@ -43,8 +47,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `admin`, `active`, `datecreated`, `datemodified`) VALUES
-(1, 'admin', '$2y$10$njXNqzEtpOprGUMTMpwJWex7j1RaZvrsctb6rN4zChTUW.W/sZws.', 'admin@admin.com', 1, 1, '2018-02-17 00:00:00', '2018-02-17 00:00:00');
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `loginattempts`, `admin`, `active`, `datecreated`, `datemodified`) VALUES
+(1, 'admin', '$2y$10$njXNqzEtpOprGUMTMpwJWex7j1RaZvrsctb6rN4zChTUW.W/sZws.', 'admin@admin.com', 0, 1, 1, '2018-02-17 00:00:00', '2018-02-17 00:00:00');
 
 --
 -- Indexes for dumped tables
