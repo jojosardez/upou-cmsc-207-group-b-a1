@@ -4,16 +4,18 @@ document.addEventListener("init", function (event) {
     if (list) {
         $.ajax({
             type: "GET",
-            url: "/api/admin.php",
+            url: "../api/admin.php",
             success: function (result) {
-                for (var i = 0; i < result.length; i++) {
-                    var onsItem = document.createElement('ons-list-item');
+                $.each(result, function(index, element) {
+                   var onsItem = document.createElement('ons-list-item');
                     onsItem.setAttribute('modifier', "chevron");
                     onsItem.setAttribute('onclick', "functionName()");
-                    onsItem.innerHTML = result[i]['username'] + ' (' + result[i]['email'] + ')';
+                    onsItem.innerHTML = element['username'] + ' (' + element['email'] + ')';
                     list.appendChild(onsItem);
-                }
+                });
+              
             },
+
             dataType: "json"
         });
     }
