@@ -1,4 +1,8 @@
 document.addEventListener("init", function (event) {
+  loadUsers();
+});
+
+var loadUsers = function () {
     var list = document.getElementById('usersList');
 
     if (list) {
@@ -7,26 +11,27 @@ document.addEventListener("init", function (event) {
             url: "../api/admin.php",
             success: function (result) {
                 $.each(result, function(index, element) {
-                   var onsItem = document.createElement('ons-list-item');
-                    onsItem.setAttribute('modifier', "chevron");
-                    onsItem.setAttribute('onclick', "functionName()");
-                    onsItem.innerHTML = element['username'] + ' (' + element['email'] + ')';
+                  var onsItem = document.createElement('ons-list-item');
+                  onsItem.setAttribute('modifier', "chevron");
+                  onsItem.setAttribute('onclick', "functionName()");
+                  onsItem.innerHTML = element['username'] + ' (' + element['email'] + ')';
 
-                    var div = document.createElement('div');  
-                    div.setAttribute('class', "right");
+                  var div = document.createElement('div');  
+                  div.setAttribute('class', "right");
 
-                    var editButton = document.createElement('ons-button');  
-                    editButton.setAttribute('onclick', "location.href = 'register.php'"); 
-                    editButton.innerHTML = "Edit";
-                    div.appendChild(editButton);
+                  var editButton = document.createElement('ons-button');  
+                  editButton.setAttribute('onclick', "location.href = 'register.php'"); 
+                  editButton.innerHTML = "Edit";
+                  div.appendChild(editButton);
 
-                    var delButton = document.createElement('ons-button');  
-                    delButton.setAttribute('onclick', "location.href = 'register.php'"); 
-                    delButton.innerHTML = "Delete";
-                    div.appendChild(delButton);
-                    onsItem.appendChild(div);
+                  var delButton = document.createElement('ons-button');  
+                  delButton.setAttribute('onclick', "deleteUser("+element['id']+")"); 
+                  delButton.innerHTML = "Delete";
+                  div.appendChild(delButton);
+                  onsItem.appendChild(div);
+                  onsItem.setAttribute('id', element['id']);
 
-                    list.appendChild(onsItem);
+                  list.appendChild(onsItem);
                 });
               
             },
@@ -34,23 +39,20 @@ document.addEventListener("init", function (event) {
             dataType: "json"
         });
     }
-});
+};
 
-var add = function () {
-  var username = document.getElementById('username').value;
-  var password = document.getElementById('password').value;
-  var email = document.getElementById('email').value;
+var deleteUser = function (id) {
+  var list = document.getElementById('usersList');
+  var item = document.getElementById(id);
 
   $.ajax({
     type: "POST",
-    url: "/api/register.php",
+    url: "../api/deleteUser.php",
     data: JSON.stringify({
-      username: username,
-      password: password,
-      email: email
+      id: id,
     }),
     success: function (result) {
-      ons.notification.alert(result);
+      list.removeChild(item);
     },
     contentType: "application/json; charset=utf-8",
     dataType: "json"

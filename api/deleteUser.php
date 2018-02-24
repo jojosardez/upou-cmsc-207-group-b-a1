@@ -1,11 +1,12 @@
 <?php
 $config = parse_ini_file('config.ini');
 $input = json_decode(file_get_contents('php://input'), true);
-$username = $input['username'];
+$id = $input['id'];
 
 try {
 	$pdo = new PDO('mysql:host=' . $config['db_server'] . ';dbname=' . $config['db_name'], $config['db_user'], $config['db_password']);
-	$statement=$pdo->prepare("SELECT * FROM users");
+	$statement=$pdo->prepare("DELETE FROM `users` WHERE `users`.`id` = :id");
+    $statement->bindParam(':id', $id);
 	$statement->execute();
 	$results=$statement->fetchAll(PDO::FETCH_ASSOC);
     print_r(json_encode($results));
