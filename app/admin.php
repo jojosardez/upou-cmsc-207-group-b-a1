@@ -45,7 +45,11 @@
                 </div>
                 <div class="center">CMSC 207 - Group B - Admin Dashboard</div>
             </ons-toolbar>
+
+            <ons-button onclick="location.href = 'register.php';">Add</ons-button>
+             
             <div style="text-align: center; margin-top: 30px;">
+              
                 <ons-list id="usersList" modifier="inset" onload="loadUsers(this)">
                     <ons-list-header>Users</ons-list-header>
                 </ons-list>

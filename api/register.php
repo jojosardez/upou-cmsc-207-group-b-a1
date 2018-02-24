@@ -39,7 +39,7 @@ try {
     $statement->bindParam(':datemodified', $datemodified);
     $result = $statement->execute();
 
-    $mail = new PHPMailer;
+   /* $mail = new PHPMailer;
     $mail->SMTPOptions = array(
         'ssl' => array(
             'verify_peer' => false,
@@ -61,7 +61,7 @@ try {
     $mail->Body = 'Hi ' . $username . ',<br/><br/><strong>Welcome to CMSC-207 Group B\'s Web Login Module!</strong><br/><br/>In order to login to the module, you need to verify your account first. Please click the following link or copy it and navigate to it using your browser: <i>To Do: link stuff</i><br/><br/>Have a nice day!<br/><br/><br/><small>This message was sent by CMSC-207 Group B\'s Web Login Module.</small>';
     $mail->AltBody = "This is the plain text version of the email content";
     $mail->send();
-
+*/
     header('Content-Type: application/json');
     print_r(json_encode("User account successfuly created!"));
 } catch (Exception $e) {
