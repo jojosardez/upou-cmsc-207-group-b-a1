@@ -20,7 +20,7 @@ var loadUsers = function () {
                   div.setAttribute('class', "right");
 
                   var editButton = document.createElement('ons-button');  
-                  editButton.setAttribute('onclick', "location.href = 'register.php'"); 
+                  editButton.setAttribute('onclick', "location.href = 'register.php?id="+element['id']+"'"); 
                   editButton.innerHTML = "Edit";
                   div.appendChild(editButton);
 
