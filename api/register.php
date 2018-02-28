@@ -27,7 +27,7 @@ $token = base64_encode(random_bytes(50));
 $verifylink = $config['verify_link'] . '?u=' . base64_encode($username) . '&t=' . $token;
 $response = [
     'success' => false,
-    'errorCode' => 0,
+    'errorcode' => 0,
     'message' => '',
 ];
 
