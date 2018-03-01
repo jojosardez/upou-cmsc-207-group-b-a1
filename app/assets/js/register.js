@@ -26,9 +26,18 @@ document.addEventListener("init", function (event) {
   }
 });
 
-var register = function () {
+var showModal = function () {
   var modal = document.querySelector('ons-modal');
   modal.show();
+}
+
+var hideModal = function () {
+  var modal = document.querySelector('ons-modal');
+  modal.hide();
+}
+
+var register = function () {
+  showModal();
   var username = document.getElementById('username').value;
   var password = document.getElementById('password').value;
   var repeatPassword = document.getElementById('repeatPassword').value;
@@ -37,7 +46,6 @@ var register = function () {
   if (validateInput(username, password, repeatPassword, email)) {
     registerAccount(username, password, email);
   }
-  modal.hide();
 };
 
 var validateInput = function (username, password, repeatPassword, email) {
@@ -71,6 +79,7 @@ var validateInput = function (username, password, repeatPassword, email) {
     return true;
   }
   else {
+    hideModal();
     ons.notification.alert(errorMessage, { title: "Invalid Input!" });
     return false;
   }
@@ -92,6 +101,7 @@ var registerAccount = function (username, password, email) {
     }),
     success: function (result) {
       var success = result['success'] === true;
+      hideModal();
       ons.notification.alert(
         success
           ? 'In order to login to the application, you need to verify your account first. Please check your email for the verification link.'
@@ -108,6 +118,7 @@ var registerAccount = function (username, password, email) {
         });
     },
     error: function (xhr) {
+      hideModal();
       console.log(xhr);
     },
     contentType: 'application/json; charset=utf-8',
