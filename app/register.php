@@ -4,6 +4,7 @@
 <head>
   <link rel="stylesheet" href="assets/lib/onsenui/css/onsenui.css">
   <link rel="stylesheet" href="assets/lib/onsenui/css/onsen-css-components.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <script src="assets/lib/onsenui/js/onsenui.min.js"></script>
   <script src="assets/lib/jquery/js/jquery.min.js"></script>
   <script src="assets/js/common.js"></script>
@@ -62,6 +63,13 @@
           <ons-button onclick="register()">Register</ons-button>
         </p>
       </div>
+      <ons-modal direction="up">
+        <div style="text-align: center">
+          <p>
+            <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Loading...
+          </p>
+        </div>
+      </ons-modal>
     </ons-page>
   </template>
 </body>
