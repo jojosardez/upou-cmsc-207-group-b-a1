@@ -53,6 +53,13 @@
           <ons-button onclick="reset()">Reset Password</ons-button>
         </p>
       </div>
+      <ons-modal direction="up">
+        <div style="text-align: center">
+          <p>
+            <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Loading...
+          </p>
+        </div>
+      </ons-modal>
     </ons-page>
   </template>
 </body>
