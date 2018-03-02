@@ -1,12 +1,17 @@
-function getQueryParam(param) {
+document.addEventListener("init", function (event) {
+    console.log("init");
+  verifyAccount();
+});
+
+var getQueryParam = function (param) {
     var result = window.location.search.match(
         new RegExp("(\\?|&)" + param + "(\\[\\])?=([^&]*)")
     );
-
     return result ? result[3] : false;
 }
 
-ons.ready(function () {
+var verifyAccount = function () {    
+    showModal();
     var encodedUsername = getQueryParam('u');
     var token = getQueryParam('t');
 
@@ -19,6 +24,7 @@ ons.ready(function () {
         }),
         success: function (result) {
             var success = result['success'] === true;
+            hideModal();
             var header = document.createElement("h3")
             header.innerText = success
                 ? 'Verification Success!'
@@ -29,7 +35,11 @@ ons.ready(function () {
             container.appendChild(header);
             container.appendChild(label);
         },
+        error: function (xhr) {
+            hideModal();
+            console.log(xhr);
+        },
         contentType: 'application/json; charset=utf-8',
         dataType: 'json'
     });
-});
+}

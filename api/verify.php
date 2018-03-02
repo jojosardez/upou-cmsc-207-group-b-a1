@@ -31,7 +31,7 @@ try {
         $response['message'] = 'Invalid data. There were no user account found with the given details.';
     } else {
         // Update user record
-        $query = "UPDATE users SET token = null, verified = 1, datemodified = :datemodified WHERE LCASE(username) = LCASE(:username)";
+        $query = "UPDATE users SET token = null, verified = 1, active = 1, datemodified = :datemodified WHERE LCASE(username) = LCASE(:username)";
         $statement = $pdo->prepare($query);
         $datemodified = date('Y-m-d H:i:s');
         $statement->bindParam(':datemodified', $datemodified);
