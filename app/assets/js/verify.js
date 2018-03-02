@@ -1,5 +1,8 @@
+var pageInitialized = false;
+
 document.addEventListener("init", function (event) {
-    console.log("init");
+    if (pageInitialized) return;
+    pageInitialized = true;
     verifyAccount();
 });
 
