@@ -1,6 +1,6 @@
 document.addEventListener("init", function (event) {
     console.log("init");
-  verifyAccount();
+    verifyAccount();
 });
 
 var getQueryParam = function (param) {
@@ -10,7 +10,7 @@ var getQueryParam = function (param) {
     return result ? result[3] : false;
 }
 
-var verifyAccount = function () {    
+var verifyAccount = function () {
     showModal();
     var encodedUsername = getQueryParam('u');
     var token = getQueryParam('t');
@@ -24,16 +24,25 @@ var verifyAccount = function () {
         }),
         success: function (result) {
             var success = result['success'] === true;
+            var errorcode = result['errorcode'];
             hideModal();
             var header = document.createElement("h3")
             header.innerText = success
                 ? 'Verification Success!'
-                : 'Verification Failed!';
+                : errorcode === 1
+                    ? 'Verification Failed!'
+                    : 'Error encountered:';
             var label = document.createElement("label")
-            label.innerHTML = "<br/><br/>" + result['message'];
+            label.innerHTML = '<br/><br/>' + result['message'] + '<br/><br/>';
             var container = document.getElementById('message');
             container.appendChild(header);
             container.appendChild(label);
+            if (success) {
+                var loginButton = document.createElement('ons-button');
+                loginButton.setAttribute('onclick', "location.href = '../app/login.php'");
+                loginButton.innerHTML = "Login";
+                container.appendChild(loginButton);
+            }
         },
         error: function (xhr) {
             hideModal();

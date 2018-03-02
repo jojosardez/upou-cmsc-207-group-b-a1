@@ -85,19 +85,19 @@ try {
     // Set failure response
     $errorCode = $pe->getCode();
     $response['errorcode'] = $errorCode;
-    if ((string)$errorCode === '23000') {
+    if ((string) $errorCode === '23000') {
         $response['message'] = 'The provided username or email address already exists. Please specify a different value.';
-    } else if ((string)$errorCode === '2002') {
+    } else if ((string) $errorCode === '2002') {
         $response['message'] = 'The database couldn\'t be reached. Please inform the administrator.';
-    } else if ((string)$errorCode === '1045') {
+    } else if ((string) $errorCode === '1045') {
         $response['message'] = 'The database credentials are incorrect. Please inform the administrator.';
     } else {
-        $response['message'] = $pe->getMessage().' Please inform the administrator.';
+        $response['message'] = $pe->getMessage() . ' Please inform the administrator.';
     }
 } catch (Exception $e) {
     // Set failure response
     $response['errorcode'] = 1000;
-    $response['message'] = $e->getMessage();
+    $response['message'] = $e->getMessage() . ' Please inform the administrator.';
 }
 
 // Return response

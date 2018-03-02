@@ -9,12 +9,12 @@ $username = base64_decode(trim($input['encodedUsername']));
 $token = trim($input['token']);
 $response = [
     'success' => false,
-    'errorCode' => 0,
+    'errorcode' => 0,
     'message' => '',
 ];
 
-$pdo = new PDO('mysql:host=' . $config['db_server'] . ';dbname=' . $config['db_name'], $config['db_user'], $config['db_password']);
 try {
+    $pdo = new PDO('mysql:host=' . $config['db_server'] . ';dbname=' . $config['db_name'], $config['db_user'], $config['db_password']);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->beginTransaction();
 
@@ -27,8 +27,8 @@ try {
 
     if ($statement->rowCount() === 0) {
         // Record not found
-        $response['errorcode'] = 1000;
-        $response['message'] = 'Invalid data. There were no user account found with the given details.';
+        $response['errorcode'] = 1;
+        $response['message'] = 'There were no user account found with the given details.';
     } else {
         // Update user record
         $query = "UPDATE users SET token = null, verified = 1, active = 1, datemodified = :datemodified WHERE LCASE(username) = LCASE(:username)";
@@ -46,16 +46,17 @@ try {
         $response['message'] = 'Congratulations! You may now login using your account.';
     }
 } catch (PDOException $pe) {
-    // Rollback transaction
-    $pdo->rollBack();
-
     // Set failure response
-    $response['errorcode'] = $pe->getCode();
-    $response['message'] = $pe->getMessage();
+    $errorCode = $pe->getCode();
+    $response['errorcode'] = $errorCode;
+    if ((string) $errorCode === '2002') {
+        $response['message'] = 'The database couldn\'t be reached. Please inform the administrator.';
+    } else if ((string) $errorCode === '1045') {
+        $response['message'] = 'The database credentials are incorrect. Please inform the administrator.';
+    } else {
+        $response['message'] = $pe->getMessage() . ' Please inform the administrator.';
+    }
 } catch (Exception $e) {
-    // Rollback transaction
-    $pdo->rollBack();
-
     // Set failure response
     $response['errorcode'] = 1000;
     $response['message'] = $e->getMessage();
