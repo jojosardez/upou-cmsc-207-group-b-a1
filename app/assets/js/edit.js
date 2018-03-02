@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-var showModal = function () {
-  var modal = document.querySelector('ons-modal');
-  modal.show();
-}
-
-var hideModal = function () {
-  var modal = document.querySelector('ons-modal');
-  modal.hide();
-}
-=======
 document.addEventListener("init", function (event) {
   var id = window.location.search.substr(1).split("=")[1];
 
@@ -20,9 +9,11 @@ document.addEventListener("init", function (event) {
         id: id
       }),
       success: function (result) {
-        console.log(result);
-        document.getElementById('username').value = result[0].username;
-        document.getElementById('email').value = result[0].email;
+        if(result[0])
+        {
+          document.getElementById('username').value = result[0].username;
+          document.getElementById('email').value = result[0].email;
+        }
       },
       error: function (error) {
         console.log(error);
@@ -30,15 +21,20 @@ document.addEventListener("init", function (event) {
       contentType: 'application/json; charset=utf-8',
       dataType: 'json'
     });
-
-    //username.setAttribute('value', "AAAA");
-    //console.log(username);
-
   }
 });
->>>>>>> fb3abe3c596ce359fecb2a58dcbea69243bbec22
 
-var register = function () {
+var showModal = function () {
+  var modal = document.querySelector('ons-modal');
+  modal.show();
+}
+
+var hideModal = function () {
+  var modal = document.querySelector('ons-modal');
+  modal.hide();
+}
+
+var save = function () {
   showModal();
   var username = document.getElementById('username').value;
   var password = document.getElementById('password').value;
@@ -46,7 +42,7 @@ var register = function () {
   var email = document.getElementById('email').value;
 
   if (validateInput(username, password, repeatPassword, email)) {
-    registerAccount(username, password, email);
+    saveAccount(username, password, email);
   }
 };
 
@@ -92,7 +88,7 @@ var validateEmail = function (email) {
   return re.test(String(email).toLowerCase());
 }
 
-var registerAccount = function (username, password, email) {
+var saveAccount = function (username, password, email) {
   $.ajax({
     type: 'POST',
     url: '../api/register.php',
