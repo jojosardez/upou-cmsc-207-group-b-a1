@@ -1,3 +1,29 @@
+document.addEventListener("init", function (event) {
+  var id = window.location.search.substr(1).split("=")[1];
+
+  if (id != undefined) {
+    $.ajax({
+      type: 'POST',
+      url: '../api/getUser.php',
+      data: JSON.stringify({
+        id: id
+      }),
+      success: function (result) {
+        if(result[0])
+        {
+          document.getElementById('username').value = result[0].username;
+          document.getElementById('email').value = result[0].email;
+        }
+      },
+      error: function (error) {
+        console.log(error);
+      },
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json'
+    });
+  }
+});
+
 var showModal = function () {
   var modal = document.querySelector('ons-modal');
   modal.show();
@@ -8,7 +34,7 @@ var hideModal = function () {
   modal.hide();
 }
 
-var register = function () {
+var save = function () {
   showModal();
   var username = document.getElementById('username').value;
   var password = document.getElementById('password').value;
@@ -16,7 +42,7 @@ var register = function () {
   var email = document.getElementById('email').value;
 
   if (validateInput(username, password, repeatPassword, email)) {
-    registerAccount(username, password, email);
+    saveAccount(username, password, email);
   }
 };
 
@@ -62,7 +88,7 @@ var validateEmail = function (email) {
   return re.test(String(email).toLowerCase());
 }
 
-var registerAccount = function (username, password, email) {
+var saveAccount = function (username, password, email) {
   $.ajax({
     type: 'POST',
     url: '../api/register.php',
