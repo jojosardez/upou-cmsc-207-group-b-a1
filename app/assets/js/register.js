@@ -26,16 +26,6 @@ document.addEventListener("init", function (event) {
   }
 });
 
-var showModal = function () {
-  var modal = document.querySelector('ons-modal');
-  modal.show();
-}
-
-var hideModal = function () {
-  var modal = document.querySelector('ons-modal');
-  modal.hide();
-}
-
 var register = function () {
   showModal();
   var username = document.getElementById('username').value;
