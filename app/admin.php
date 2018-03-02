@@ -54,15 +54,15 @@
                     <ons-list-header>Users</ons-list-header>
                 </ons-list>
             </div>
-            <ons-modal direction="up">
-              <div style="text-align: center">
-                <p>
-                  <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Loading...
-                </p>
-              </div>
-            </ons-modal>
         </ons-page>
     </template>
+    <ons-modal direction="up">
+      <div style="text-align: center">
+        <p>
+          <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Loading...
+        </p>
+      </div>
+    </ons-modal>
 </body>
 
 </html>
