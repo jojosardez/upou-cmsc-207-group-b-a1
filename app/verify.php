@@ -7,7 +7,7 @@
     <script src="assets/lib/onsenui/js/onsenui.min.js"></script>
     <script src="assets/lib/jquery/js/jquery.min.js"></script>
     <script src="assets/js/common.js"></script>
-    <script src="assets/js/admin.js"></script>
+    <script src="assets/js/verify.js"></script>
 </head>
 
 <body>
@@ -43,16 +43,10 @@
                         <ons-icon icon="md-menu"></ons-icon>
                     </ons-toolbar-button>
                 </div>
-                <div class="center">CMSC 207 - Group B - Admin Dashboard</div>
+                <div class="center">CMSC 207 - Group B - Verify Account</div>
             </ons-toolbar>
-
-            <ons-button onclick="location.href = 'register.php';">Add</ons-button>
-             
             <div style="text-align: center; margin-top: 30px;">
-              
-                <ons-list id="usersList" modifier="inset" onload="loadUsers(this)">
-                    <ons-list-header>Users</ons-list-header>
-                </ons-list>
+                <div id="message"></div>
             </div>
         </ons-page>
     </template>
