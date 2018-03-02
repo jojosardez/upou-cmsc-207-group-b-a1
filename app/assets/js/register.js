@@ -26,16 +26,6 @@ document.addEventListener("init", function (event) {
   }
 });
 
-var showModal = function () {
-  var modal = document.querySelector('ons-modal');
-  modal.show();
-}
-
-var hideModal = function () {
-  var modal = document.querySelector('ons-modal');
-  modal.hide();
-}
-
 var register = function () {
   showModal();
   var username = document.getElementById('username').value;
@@ -103,9 +93,7 @@ var registerAccount = function (username, password, email) {
       var success = result['success'] === true;
       hideModal();
       ons.notification.alert(
-        success
-          ? 'In order to login to the application, you need to verify your account first. Please check your email for the verification link.'
-          : result['message'],
+        result['message'],
         {
           title: success
             ? 'Registration Success!'

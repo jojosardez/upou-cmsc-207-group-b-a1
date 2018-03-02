@@ -81,6 +81,7 @@ try {
 
     // Set successful response
     $response['success'] = true;
+    $response['message'] = 'Please check your email for the verification link.';
 } catch (PDOException $pe) {
     // Set failure response
     $errorCode = $pe->getCode();
