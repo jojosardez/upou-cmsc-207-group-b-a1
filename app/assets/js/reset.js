@@ -38,7 +38,7 @@ var verifyReset = function () {
                 });
 
             if (!success) {
-                var resetInput = document.createElement("resetInput");
+                var resetInput = document.getElementById("resetInput");
                 resetInput.style.display = 'none';
             }
         },
