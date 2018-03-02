@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var showModal = function () {
   var modal = document.querySelector('ons-modal');
   modal.show();
@@ -7,6 +8,35 @@ var hideModal = function () {
   var modal = document.querySelector('ons-modal');
   modal.hide();
 }
+=======
+document.addEventListener("init", function (event) {
+  var id = window.location.search.substr(1).split("=")[1];
+
+  if (id != undefined) {
+    $.ajax({
+      type: 'POST',
+      url: '../api/getUser.php',
+      data: JSON.stringify({
+        id: id
+      }),
+      success: function (result) {
+        console.log(result);
+        document.getElementById('username').value = result[0].username;
+        document.getElementById('email').value = result[0].email;
+      },
+      error: function (error) {
+        console.log(error);
+      },
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json'
+    });
+
+    //username.setAttribute('value', "AAAA");
+    //console.log(username);
+
+  }
+});
+>>>>>>> fb3abe3c596ce359fecb2a58dcbea69243bbec22
 
 var register = function () {
   showModal();
