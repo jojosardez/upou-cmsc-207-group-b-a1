@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-var showModal = function () {
-  var modal = document.querySelector('ons-modal');
-  modal.show();
-}
-
-var hideModal = function () {
-  var modal = document.querySelector('ons-modal');
-  modal.hide();
-}
-=======
 document.addEventListener("init", function (event) {
   var id = window.location.search.substr(1).split("=")[1];
 
@@ -36,7 +25,16 @@ document.addEventListener("init", function (event) {
 
   }
 });
->>>>>>> fb3abe3c596ce359fecb2a58dcbea69243bbec22
+
+var showModal = function () {
+  var modal = document.querySelector('ons-modal');
+  modal.show();
+}
+
+var hideModal = function () {
+  var modal = document.querySelector('ons-modal');
+  modal.hide();
+}
 
 var register = function () {
   showModal();
