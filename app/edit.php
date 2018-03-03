@@ -16,20 +16,14 @@
     <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
       <ons-page>
         <ons-list>
-          <ons-list-item onclick="location.href = 'login.php';" tappable>
-            Login
-          </ons-list-item>
-          <ons-list-item onclick="location.href = 'forgot.php';" tappable>
-            Forgot Password
+          <ons-list-item onclick="location.href = 'admin.php';" tappable>
+            Dashboard
           </ons-list-item>
           <ons-list-item onclick="location.href = 'change.php';" tappable>
             Change Password
           </ons-list-item>
-          <ons-list-item onclick="location.href = 'register.php';" tappable>
-            Register
-          </ons-list-item>
-          <ons-list-item onclick="location.href = 'admin.php';" tappable>
-            Admin Dashboard
+          <ons-list-item onclick="location.href = 'login.php';" tappable>
+            Logout
           </ons-list-item>
         </ons-list>
       </ons-page>
@@ -41,27 +35,30 @@
       <ons-toolbar>
         <div class="left">
           <ons-toolbar-button onclick="fn.open()">
-            <ons-icon icon="md-menu"></ons-icon>
+            <img class="logoBorder" src="assets/images/upoulogo.png" alt="UPOU Logo">
           </ons-toolbar-button>
         </div>
-        <div class="center">CMSC 207 - Group B - Register</div>
+        <div class="center">Edit Account</div>
       </ons-toolbar>
       <div style="text-align: center; margin-top: 30px;">
         <p>
-          <ons-input id="username" modifier="underbar" placeholder="Username" float></ons-input>
+          <ons-input id="username" modifier="underbar" placeholder="Username" size="35" required float></ons-input>
         </p>
         <p>
-          <ons-input id="email" modifier="underbar" placeholder="Email Address" float></ons-input>
+          <ons-input id="email" modifier="underbar" placeholder="Email Address" size="35" required float></ons-input>
         </p>
         <p>
-          <ons-input id="password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
+          <ons-input id="password" modifier="underbar" type="password" placeholder="Password" size="35" required float></ons-input>
         </p>
         <p>
-          <ons-input id="repeatPassword" modifier="underbar" type="password" placeholder="Repeat Password" float></ons-input>
+          <ons-input id="repeatPassword" modifier="underbar" type="password" placeholder="Repeat Password" size="35" required float></ons-input>
         </p>
         <p style="margin-top: 30px;">
           <ons-button onclick="register()">SAVE</ons-button>
         </p>
+      </div>
+      <div class="footer">
+        <p><small>&copy; CMSC 2017 - Group B - Login Module</small></p>
       </div>
       <ons-modal direction="up">
         <div style="text-align: center">

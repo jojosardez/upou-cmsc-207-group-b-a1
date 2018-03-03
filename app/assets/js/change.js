@@ -1,13 +1,13 @@
 var change = function () {
-    var username = document.getElementById('username').value;
     var currentPassword = document.getElementById('currentPassword').value;
     var newPassword = document.getElementById('newPassword').value;
+    var newPasswordRepeat = document.getElementById('newPasswordRepeat').value;
   
     $.ajax({
       type: "POST",
       url: "/api/change.php",
       data: JSON.stringify({
-        username: username,
+        username: "TO DO: get from session",
         currentPassword: currentPassword,
         newPassword: newPassword
       }),
