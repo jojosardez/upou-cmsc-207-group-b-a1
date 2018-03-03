@@ -50,7 +50,7 @@
                 </ons-list>
             </div>
             <div class="footer">
-              <p><small>&copy; CMSC 2017 - Group B - Login Module</small></p>
+              <p><small>&copy; CMSC-207 - Group B - Login Module</small></p>
             </div>
         </ons-page>
     </template>
