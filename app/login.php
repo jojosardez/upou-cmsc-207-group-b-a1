@@ -13,21 +13,6 @@
 
 <body>
   <ons-splitter>
-    <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
-      <ons-page>
-        <ons-list>
-          <ons-list-item onclick="location.href = 'login.php';" tappable>
-            Login
-          </ons-list-item>
-          <ons-list-item onclick="location.href = 'forgot.php';" tappable>
-            Forgot Password
-          </ons-list-item>
-          <ons-list-item onclick="location.href = 'register.php';" tappable>
-            Register
-          </ons-list-item>
-        </ons-list>
-      </ons-page>
-    </ons-splitter-side>
     <ons-splitter-content id="content" page="home"></ons-splitter-content>
   </ons-splitter>
   <template id="home">

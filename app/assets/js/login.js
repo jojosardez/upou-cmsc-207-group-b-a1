@@ -4,13 +4,13 @@ var login = function () {
 
   $.ajax({
     type: "POST",
-    url: "/api/login.php",
+    url: "../api/login.php",
     data: JSON.stringify({
       username: username,
       password: password
     }),
     success: function (result) {
-      ons.notification.alert(result);
+      document.location.href = "../app/dashboard.php";
     },
     contentType: "application/json; charset=utf-8",
     dataType: "json"

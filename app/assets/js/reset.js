@@ -20,7 +20,7 @@ var verifyReset = function () {
 
     $.ajax({
         type: 'POST',
-        url: '/api/resetVerify.php',
+        url: '../api/resetVerify.php',
         data: JSON.stringify({
             encodedUsername: encodedUsername,
             token: token

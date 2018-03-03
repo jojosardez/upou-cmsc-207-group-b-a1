@@ -9,7 +9,7 @@ var reset = function () {
   else {
     $.ajax({
       type: "POST",
-      url: "/api/forgot.php",
+      url: "../api/forgot.php",
       data: JSON.stringify({
         usernameOrEmail: usernameOrEmail
       }),

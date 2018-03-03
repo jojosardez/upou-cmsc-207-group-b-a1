@@ -16,7 +16,7 @@
     <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
       <ons-page>
         <ons-list>
-          <ons-list-item onclick="location.href = 'admin.php';" tappable>
+          <ons-list-item onclick="location.href = 'dashboard.php';" tappable>
             Dashboard
           </ons-list-item>
           <ons-list-item onclick="location.href = 'change.php';" tappable>

@@ -13,6 +13,8 @@ $config = parse_ini_file('config.ini');
 
 // Extract posted data and prepare data
 $input = json_decode(file_get_contents('php://input'), true);
+$id = trim($input['id']);
+$prevEmail = trim($input['prevEmail']);
 $username = trim($input['username']);
 $password = trim($input['password']);
 $encryptedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -37,51 +39,88 @@ try {
     $pdo->beginTransaction();
 
     // Insert user record
-    $query = "INSERT INTO users (username, password, email, loginattempts, admin, active, verified, datecreated, datemodified, token)
-            VALUES (:username, :password, :email, :loginattempts, :admin, :active, :verified, :datecreated, :datemodified, :token)";
+    $query = "";
+
+    if($id == 0)
+    {
+        $query = "INSERT INTO users (username, password, email, loginattempts, admin, active, verified, datecreated, datemodified, token)
+                VALUES (:username, :password, :email, :loginattempts, :admin, :active, :verified, :datecreated, :datemodified, :token)";
+    }
+    else
+    {
+        $query = "UPDATE `users` SET `username` = :username, 
+                                    `email` = :email,
+                                    `loginattempts` = :loginattempts,
+                                    `admin` = :admin,
+                                    `active` = :active,
+                                    `verified` = :verified,
+                                    `datemodified` = :datemodified,
+                                    `token` = :token
+                                    WHERE `users`.`id` = :id";
+    }
+
     $statement = $pdo->prepare($query);
     $statement->bindParam(':username', $username);
-    $statement->bindParam(':password', $encryptedPassword);
     $statement->bindParam(':email', $email);
     $statement->bindParam(':loginattempts', $loginattempts);
     $statement->bindParam(':admin', $admin);
     $statement->bindParam(':active', $active);
     $statement->bindParam(':verified', $verified);
-    $statement->bindParam(':datecreated', $datecreated);
     $statement->bindParam(':datemodified', $datemodified);
     $statement->bindParam(':token', $token);
+
+    if($id == 0)
+    {
+        $statement->bindParam(':datecreated', $datecreated);
+        $statement->bindParam(':password', $encryptedPassword);
+    }
+    else{
+        $statement->bindParam(':id', $id);
+    }
+
     $result = $statement->execute();
 
     // Send confirmation email
-    $mail = new PHPMailer;
-    $mail->SMTPOptions = array(
-        'ssl' => array(
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-            'allow_self_signed' => true,
-        ));
-    $mail->isSMTP();
-    $mail->SMTPSecure = 'tls';
-    $mail->SMTPAuth = true;
-    $mail->Host = $config['smtp_server'];
-    $mail->Port = $config['smtp_port'];
-    $mail->Username = $config['smtp_username'];
-    $mail->Password = $config['smtp_password'];
-    $mail->From = $config['smtp_username'];
-    $mail->FromName = 'CMSC-207 Group B Web Login Module Admin';
-    $mail->addAddress($email, $username);
-    $mail->isHTML(true);
-    $mail->Subject = 'CMSC-207 Group B Web Login Module - Verify your account!';
-    $mail->Body = 'Hi ' . $username . ',<br/><br/><strong>Welcome to CMSC-207 Group B\'s Web Login Module!</strong><br/><br/>In order to login to the module, you need to verify your account first. Please click the following link or copy it and navigate to it using your browser: <strong><i><a href="' . $verifylink . '">' . $verifylink . '<a/></i></strong><br/><br/>Have a nice day!<br/><br/><br/><small>This message was sent by CMSC-207 Group B\'s Web Login Module.</small>';
-    $mail->AltBody = 'Hi ' . $username . ', Welcome to CMSC-207 Group B\'s Web Login Module! In order to login to the module, you need to verify your account first. Please click the following link or copy it and navigate to it using your browser: ' . $verifylink . ' Have a nice day! This message was sent by CMSC-207 Group B\'s Web Login Module.';
-    $mail->send();
+
+    if($prevEmail != $email){
+        $mail = new PHPMailer;
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            ));
+        $mail->isSMTP();
+        $mail->SMTPSecure = 'tls';
+        $mail->SMTPAuth = true;
+        $mail->Host = $config['smtp_server'];
+        $mail->Port = $config['smtp_port'];
+        $mail->Username = $config['smtp_username'];
+        $mail->Password = $config['smtp_password'];
+        $mail->From = $config['smtp_username'];
+        $mail->FromName = 'CMSC-207 Group B Web Login Module Admin';
+        $mail->addAddress($email, $username);
+        $mail->isHTML(true);
+        $mail->Subject = 'CMSC-207 Group B Web Login Module - Verify your account!';
+        $mail->Body = 'Hi ' . $username . ',<br/><br/><strong>Welcome to CMSC-207 Group B\'s Web Login Module!</strong><br/><br/>In order to login to the module, you need to verify your account first. Please click the following link or copy it and navigate to it using your browser: <strong><i><a href="' . $verifylink . '">' . $verifylink . '<a/></i></strong><br/><br/>Have a nice day!<br/><br/><br/><small>This message was sent by CMSC-207 Group B\'s Web Login Module.</small>';
+        $mail->AltBody = 'Hi ' . $username . ', Welcome to CMSC-207 Group B\'s Web Login Module! In order to login to the module, you need to verify your account first. Please click the following link or copy it and navigate to it using your browser: ' . $verifylink . ' Have a nice day! This message was sent by CMSC-207 Group B\'s Web Login Module.';
+        $mail->send();
+    }
 
     // Commit transaction
     $pdo->commit();
 
     // Set successful response
     $response['success'] = true;
-    $response['message'] = 'Please check your email for the verification link.';
+
+    if($prevEmail != $email)
+    {
+        $response['message'] = 'Please check your email for the verification link.';
+    }
+    else
+    {
+        $response['message'] = 'User updated.';
+    }
 } catch (PDOException $pe) {
     // Set failure response
     $errorCode = $pe->getCode();

@@ -54,7 +54,7 @@
           <ons-input id="repeatPassword" modifier="underbar" type="password" placeholder="Repeat Password" size="35" required float></ons-input>
         </p>
         <p style="margin-top: 30px;">
-          <ons-button onclick="register()">Register</ons-button>
+          <ons-button onclick="save()">Register</ons-button>
         </p>
       </div>
       <div class="footer">

@@ -1,7 +1,11 @@
-document.addEventListener("init", function (event) {
-  var id = window.location.search.substr(1).split("=")[1];
+var id = 0, prevEmail = '';
 
-  if (id != undefined) {
+document.addEventListener("init", function (event) {
+  var getId = window.location.search.substr(1).split("=")[1];
+
+  if (getId != undefined) {
+    id = getId;
+
     $.ajax({
       type: 'POST',
       url: '../api/getUser.php',
@@ -9,9 +13,9 @@ document.addEventListener("init", function (event) {
         id: id
       }),
       success: function (result) {
-        console.log(result);
         document.getElementById('username').value = result[0].username;
         document.getElementById('email').value = result[0].email;
+        prevEmail = result[0].email; 
       },
       error: function (error) {
         console.log(error);
@@ -19,19 +23,19 @@ document.addEventListener("init", function (event) {
       contentType: 'application/json; charset=utf-8',
       dataType: 'json'
     });
-
-    //username.setAttribute('value', "AAAA");
-    //console.log(username);
-
   }
 });
 
-var register = function () {
+var save = function () {
   showModal();
   var username = document.getElementById('username').value;
-  var password = document.getElementById('password').value;
-  var repeatPassword = document.getElementById('repeatPassword').value;
   var email = document.getElementById('email').value;
+  var password = '', repeatPassword = '';
+
+  if(id === 0){
+    password = document.getElementById('password').value;
+    repeatPassword = document.getElementById('repeatPassword').value;    
+  }
 
   if (validateInput(username, password, repeatPassword, email)) {
     registerAccount(username, password, email);
@@ -52,17 +56,20 @@ var validateInput = function (username, password, repeatPassword, email) {
   else if (!validateEmail(email)) {
     errorMessage = "Email address provided is invalid.";
   }
-  else if (password === "") {
-    errorMessage = "Password should not be empty.";
-  }
-  else if (password.length < 5 || password.length > 50) {
-    errorMessage = "Password must be between 5 and 50 characters in length.";
-  }
-  else if (repeatPassword === "") {
-    errorMessage = "Repeat password should not be empty.";
-  }
-  else if (password != repeatPassword) {
-    errorMessage = "Passwords provided should match.";
+  else if (id === 0)
+  {
+    if (password === "") {
+      errorMessage = "Password should not be empty.";
+    }
+    else if (password.length < 5 || password.length > 50) {
+      errorMessage = "Password must be between 5 and 50 characters in length.";
+    }
+    else if (repeatPassword === "") {
+      errorMessage = "Repeat password should not be empty.";
+    }
+    else if (password != repeatPassword) {
+      errorMessage = "Passwords provided should match.";
+    }
   }
 
   if (errorMessage === "") {
@@ -81,13 +88,16 @@ var validateEmail = function (email) {
 }
 
 var registerAccount = function (username, password, email) {
+
   $.ajax({
     type: 'POST',
     url: '../api/register.php',
     data: JSON.stringify({
       username: username,
       password: password,
-      email: email
+      email: email,
+      id: id,
+      prevEmail: prevEmail
     }),
     success: function (result) {
       var success = result['success'] === true;
@@ -96,11 +106,16 @@ var registerAccount = function (username, password, email) {
         result['message'],
         {
           title: success
-            ? 'Registration Success!'
-            : 'Registration Failed!',
+            ? 'Success!'
+            : 'Failed!',
           callback: function () {
             if (success) {
-              document.location.href = "../app/login.php";
+              if(id === 0){
+                document.location.href = "../app/login.php";
+              }
+              else{
+                document.location.href = "../app/dashboard.php";
+              }
             }
           }
         });

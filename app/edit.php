@@ -8,7 +8,7 @@
   <script src="assets/lib/onsenui/js/onsenui.min.js"></script>
   <script src="assets/lib/jquery/js/jquery.min.js"></script>
   <script src="assets/js/common.js"></script>
-  <script src="assets/js/edit.js"></script>
+  <script src="assets/js/register.js"></script>
 </head>
 
 <body>
@@ -16,7 +16,7 @@
     <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
       <ons-page>
         <ons-list>
-          <ons-list-item onclick="location.href = 'admin.php';" tappable>
+          <ons-list-item onclick="location.href = 'dashboard.php';" tappable>
             Dashboard
           </ons-list-item>
           <ons-list-item onclick="location.href = 'change.php';" tappable>
@@ -47,14 +47,8 @@
         <p>
           <ons-input id="email" modifier="underbar" placeholder="Email Address" size="35" required float></ons-input>
         </p>
-        <p>
-          <ons-input id="password" modifier="underbar" type="password" placeholder="Password" size="35" required float></ons-input>
-        </p>
-        <p>
-          <ons-input id="repeatPassword" modifier="underbar" type="password" placeholder="Repeat Password" size="35" required float></ons-input>
-        </p>
         <p style="margin-top: 30px;">
-          <ons-button onclick="register()">SAVE</ons-button>
+          <ons-button onclick="save()">SAVE</ons-button>
         </p>
       </div>
       <div class="footer">

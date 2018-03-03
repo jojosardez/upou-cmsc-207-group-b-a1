@@ -16,7 +16,7 @@
     <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
       <ons-page>
         <ons-list>
-          <ons-list-item onclick="location.href = 'admin.php';" tappable>
+          <ons-list-item onclick="location.href = 'dashboard.php';" tappable>
             Dashboard
           </ons-list-item>
           <ons-list-item onclick="location.href = 'change.php';" tappable>
@@ -41,7 +41,7 @@
                 <div class="center">Dashboard</div>
             </ons-toolbar>
 
-            <ons-button onclick="location.href = 'register.php';">Add</ons-button>
+            <ons-button onclick="location.href = 'register.php';">Register New User</ons-button>
              
             <div style="text-align: center; margin-top: 30px;">
               

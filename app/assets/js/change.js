@@ -5,7 +5,7 @@ var change = function () {
   
     $.ajax({
       type: "POST",
-      url: "/api/change.php",
+      url: "../api/change.php",
       data: JSON.stringify({
         username: "TO DO: get from session",
         currentPassword: currentPassword,
