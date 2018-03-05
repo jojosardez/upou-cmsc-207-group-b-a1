@@ -10,7 +10,12 @@ var login = function () {
       password: password
     }),
     success: function (result) {
-      ons.notification.alert(result);
+		if(result[0] == 1){
+			location.href = 'admin.php'
+		}
+		else {
+			ons.notification.alert(result[1]);
+		}
     },
     contentType: "application/json; charset=utf-8",
     dataType: "json"

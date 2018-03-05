@@ -1,70 +1,85 @@
-<!DOCTYPE html>
-<html>
+<?php
+// Start the session for account
+session_start();
 
-<head>
-  <link rel="stylesheet" href="assets/lib/onsenui/css/onsenui.css">
-  <link rel="stylesheet" href="assets/lib/onsenui/css/onsen-css-components.min.css">
-  <script src="assets/lib/onsenui/js/onsenui.min.js"></script>
-  <script src="assets/lib/jquery/js/jquery.min.js"></script>
-  <script src="assets/js/common.js"></script>
-  <script src="assets/js/login.js"></script>
-</head>
+//  Intitialize value from login form
+$input = json_decode(file_get_contents('php://input'), true);
+$username = $input['username'];
+$password = $input['password'];
 
-<body>
-  <ons-splitter>
-    <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
-      <ons-page>
-        <ons-list>
-          <ons-list-item onclick="location.href = 'login.php';" tappable>
-            Login
-          </ons-list-item>
-          <ons-list-item onclick="location.href = 'forgot.php';" tappable>
-            Forgot Password
-          </ons-list-item>
-          <ons-list-item onclick="location.href = 'change.php';" tappable>
-            Change Password
-          </ons-list-item>
-          <ons-list-item onclick="location.href = 'register.php';" tappable>
-            Register
-          </ons-list-item>
-          <ons-list-item onclick="location.href = 'admin.php';" tappable>
-            Admin Dashboard
-          </ons-list-item>
-        </ons-list>
-      </ons-page>
-    </ons-splitter-side>
-    <ons-splitter-content id="content" page="home"></ons-splitter-content>
-  </ons-splitter>
-  <template id="home">
-    <ons-page>
-      <ons-toolbar>
-        <div class="left">
-          <ons-toolbar-button onclick="fn.open()">
-            <ons-icon icon="md-menu"></ons-icon>
-          </ons-toolbar-button>
-        </div>
-        <div class="center">CMSC 207 - Group B - Login</div>
-      </ons-toolbar>
-      <div style="text-align: center; margin-top: 30px;">
-        <p>
-          <ons-input id="username" modifier="underbar" placeholder="Username" float></ons-input>
-        </p>
-        <p>
-          <ons-input id="password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
-        </p>
-        <p style="margin-top: 30px;">
-          <ons-button onclick="login()">Login</ons-button>
-        </p>
-      </div>
-    </ons-page>
-  </template>
-  <ons-modal direction="up">
-    <div style="text-align: center">
-      <p>
-        <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Loading...
-      </p>
-    </div>
-  </ons-modal>
-</body>
+?>
 
-</html>
+<?php
+// var con -> establish a connection to database assignment1db
+$con =   mysqli_connect('localhost', 'root' ,'', 'assignment1db');
+	// test if you can connect to database | if not die
+	if (!$con) {
+			die("Connection failed: " . mysqli_connect_error());
+	}
+	// Prepare statement to test if input $username is available in the database
+	$sql = "SELECT loginattempts FROM users WHERE username='" . $username . "'";
+	
+	// result -> is the result of the query of $sql
+	$result = mysqli_query($con, $sql);
+	
+	// test if the $result is not null | Must return one row from database
+	if (mysqli_num_rows($result) > 0) {
+        echo var_dump($result);
+		while($row = mysqli_fetch_assoc($result)) {
+			// Test if the user has less than or 3 attempts
+			if($row["loginattempts"] < 3) {
+				// Prepare a statement to test if the $username and $password is correct
+				$sql = "SELECT * FROM users WHERE username='" . $username . "' AND password='" . password_hash($password, PASSWORD_DEFAULT) . "'";
+				// result -> is the result of the query
+				$result = $con->query($sql);
+				// test if the result is not null | Must return one value
+				if ($result->num_rows > 0) {
+					// print a JSON "true" | will be read by login.js
+					print_r(json_encode(array(1,"You have login successfully")));
+					// row is the asociated result from db
+					// since username in users table was Unique | Max value for $row was 1
+					while($row = $result->fetch_assoc()) {
+						// set the session for current user | set session "CURRENT_user" as 'id' from table users
+						$_SESSION['CURRENT_user']=$row['id'];
+					}
+				// Username and password is not in the users table
+				}else {
+					
+					// Prepare statement to test if input $username is available in the database
+					$sql = "SELECT loginattempts FROM users WHERE username='" . $username . "'";
+
+					// result -> is the result of the query of $sql
+					$result = $con->query($sql);
+
+					// test if the $result is not null | Must return one row from database
+					
+					if ($result->num_rows > 0) {
+						$loginattempts = 0;
+						while($row = $result->fetch_assoc()) {
+							$loginattempts = $row['loginattempts'];
+						}
+						
+						$sql = "UPDATE users SET loginattempts = " . $loginattempts . " WHERE username='" . $username . "'";
+						// result -> is the result of the query of $sql
+						$result = $con->query($sql);
+						
+					}
+					
+					// print a JSON  "false" | will be read by login.js
+					print_r(json_encode(array(0,"Username and password invalid.")));
+				}
+			}
+			// login attempts is greater than 3 attempts
+			else {
+				print_r(json_encode(array(0,"You have login for 3 times.")));
+			}
+		}
+	}
+	// Username doesn't exist in the table users
+	else {
+		// print a JSON "false" | will be read by login.js
+		print_r(json_encode(array(0,"Username and password invalid.")));
+	}
+	
+	$con->close();
+?>
