@@ -74,7 +74,7 @@ try {
         $mail->addAddress($email, $username);
         $mail->isHTML(true);
         $mail->Subject = 'CMSC-207 Group B Web Login Module - Reset your password!';
-        $mail->Body = 'Hi ' . $username . ',<br/><br/>Please click the following link or copy it and navigate to it using your browser to reset your password: <i><a href="' . $resetLink . '">' . $resetLink . '<a/></i></strong><br/><br/>Have a nice day!<br/><br/><br/><small>This message was sent by CMSC-207 Group B\'s Web Login Module.</small>';
+        $mail->Body = 'Hi ' . $username . ',<br/><br/>Please click the following link or copy it and navigate to it using your browser to reset your password: <strong><i><a href="' . $resetLink . '">' . $resetLink . '</a></i></strong><br/><br/>Have a nice day!<br/><br/><br/><small>This message was sent by CMSC-207 Group B\'s Web Login Module.</small>';
         $mail->AltBody = 'Hi ' . $username . ', Please click the following link or copy it and navigate to it using your browser to reset your password: ' . $resetLink . ' Have a nice day! This message was sent by CMSC-207 Group B\'s Web Login Module.';
         $mail->send();
 
