@@ -37,7 +37,11 @@ var verifyReset = function () {
                         : 'Error encountered:'
                 });
 
-            if (!success) {
+            if (success) {
+                var loginMessage = document.getElementById("loginMessage");
+                loginMessage.style.display = 'none';
+            }
+            else {
                 var resetInput = document.getElementById("resetInput");
                 resetInput.style.display = 'none';
             }

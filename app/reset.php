@@ -48,7 +48,12 @@
                 <ons-input id="repeatPassword" modifier="underbar" type="password" placeholder="Repeat New Password" float></ons-input>
               </p>
               <p style="margin-top: 30px;">
-                <ons-button onclick="reset()">OK</ons-button>
+                <ons-button onclick="reset()">Save</ons-button>
+              </p>
+            </div>
+            <div id="loginMessage" style="text-align: center; margin-top: 30px;">
+              <p style="margin-top: 30px;">
+                Go to<ons-button modifier="quiet" onclick="location.href = 'login.php';">login</ons-button> page.
               </p>
             </div>
             <div class="footer">

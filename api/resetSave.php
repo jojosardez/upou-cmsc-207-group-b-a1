@@ -19,7 +19,7 @@ try {
     $pdo->beginTransaction();
 
     // Update user record
-    $query = "UPDATE users SET password = :encryptedPassword, datemodified = :datemodified WHERE LCASE(username) = LCASE(:username)";
+    $query = "UPDATE users SET password = :encryptedPassword, datemodified = :datemodified, token = null WHERE LCASE(username) = LCASE(:username)";
     $statement = $pdo->prepare($query);
     $datemodified = date('Y-m-d H:i:s');
     $statement->bindParam(':datemodified', $datemodified);
