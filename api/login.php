@@ -10,12 +10,10 @@ $input = json_decode(file_get_contents('php://input'), true);
 $username = $input['username'];
 $password = $input['password'];
 
+$config = parse_ini_file('config.ini');
 
-?>
-
-<?php
 // var con -> establish a connection to database assignment1db
-$con =  mysqli_connect('localhost', 'root' ,'', 'assignment1db');
+$con =  mysqli_connect($config['db_server'], $config['db_user'] , $config['db_password'], $config['db_name']);
 	// test if you can connect to database | if not die
 	if (!$con) {
 			die("Connection failed: " . mysqli_connect_error());

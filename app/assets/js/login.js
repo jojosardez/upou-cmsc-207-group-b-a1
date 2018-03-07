@@ -4,7 +4,7 @@ var login = function () {
 
   $.ajax({
     type: "POST",
-    url: "/api/login.php",
+    url: "../api/login.php",
     data: JSON.stringify({
       username: username,
       password: password
