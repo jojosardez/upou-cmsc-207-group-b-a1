@@ -71,8 +71,8 @@ var validateInput = function (password, repeatPassword) {
     if (password === "") {
         errorMessage = "Password should not be empty.";
     }
-    else if (password.length < 5 || password.length > 50) {
-        errorMessage = "Password must be between 5 and 50 characters in length.";
+    else if (validatePassword(password)) {
+        errorMessage = "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character, and must be between 8 and 50 characters in length.";
     }
     else if (repeatPassword === "") {
         errorMessage = "Repeat password should not be empty.";
