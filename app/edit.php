@@ -48,7 +48,9 @@
           <ons-input id="email" modifier="underbar" placeholder="Email Address" size="35" required float></ons-input>
         </p>
         <p style="margin-top: 30px;">
-          <ons-button onclick="save()">SAVE</ons-button>
+          <ons-button onclick="save()">Save</ons-button>
+          &nbsp;
+          <ons-button onclick="goBack()">Cancel</ons-button>
         </p>
       </div>
       <div class="footer">

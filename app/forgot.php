@@ -46,6 +46,8 @@
         </p>
         <p style="margin-top: 30px;">
           <ons-button onclick="reset()">Reset Password</ons-button>
+          &nbsp;
+          <ons-button onclick="goBack()">Cancel</ons-button>
         </p>
       </div>
       <div class="footer">

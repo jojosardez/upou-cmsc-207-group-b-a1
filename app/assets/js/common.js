@@ -1,6 +1,6 @@
 window.fn = {};
 
-window.fn.open = function() {
+window.fn.open = function () {
   var menu = document.getElementById('menu');
   menu.open();
 };
@@ -13,4 +13,8 @@ var showModal = function () {
 var hideModal = function () {
   var modal = document.querySelector('ons-modal');
   modal.hide();
+}
+
+var goBack = function () {
+  window.history.back();
 }
