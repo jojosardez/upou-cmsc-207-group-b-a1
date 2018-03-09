@@ -42,6 +42,8 @@ $con =  mysqli_connect($config['db_server'], $config['db_user'] , $config['db_pa
                             $sql = "UPDATE `users` SET loginattempts = 1 WHERE username='" . $username . "'";
                             // result -> is the result of the query of $sql
                             $result = $con->query($sql);  
+                            $_SESSION["user"] = $username;
+                    
                             print_r(json_encode(array(1,"You have login successfully")));
                         }
                         else {

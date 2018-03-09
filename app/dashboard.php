@@ -9,20 +9,28 @@
     <script src="assets/lib/jquery/js/jquery.min.js"></script>
     <script src="assets/js/common.js"></script>
     <script src="assets/js/admin.js"></script>
+
+
+
+
+
+
 </head>
 
 <body>
+
 <ons-splitter>
     <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
       <ons-page>
         <ons-list>
           <ons-list-item onclick="location.href = 'dashboard.php';" tappable>
-            Dashboard
+            Dashboard  
+
           </ons-list-item>
           <ons-list-item onclick="location.href = 'change.php';" tappable>
             Change Password
           </ons-list-item>
-          <ons-list-item onclick="location.href = 'login.php';" tappable>
+          <ons-list-item onclick="logout()" tappable>
             Logout
           </ons-list-item>
         </ons-list>
@@ -39,10 +47,13 @@
                     </ons-toolbar-button>
                 </div>
                 <div class="center">Dashboard</div>
+                <div class="right">
+                  <div id="currentUser"></div>
+                </div>
             </ons-toolbar>
 
-            <ons-button onclick="location.href = 'register.php';">Register New User</ons-button>
-             
+            <ons-button onclick="location.href = 'register.php';">Register New User</ons-button>          
+          
             <div style="text-align: center; margin-top: 30px;">
               
                 <ons-list id="usersList" modifier="inset" onload="loadUsers(this)">

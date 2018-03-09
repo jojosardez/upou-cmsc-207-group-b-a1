@@ -10,11 +10,11 @@ var loadUsers = function () {
             type: "GET",
             url: "../api/admin.php",
             success: function (result) {
-                $.each(result, function(index, element) {
+                var username = document.getElementById('currentUser');
+                username.innerHTML = 'Current user: ' + result[0]['user'];
+
+                $.each(result[1], function(index, element) {
                   var onsItem = document.createElement('ons-list-item');
-                  //onsItem.setAttribute('modifier', "chevron");
-                  //onsItem.setAttribute('onclick', "functionName()");
-                  //onsItem.innerHTML = element['username'] + ' (' + element['email'] + ')';
 
                   var div = document.createElement('div');  
                   div.setAttribute('class', "right");
@@ -73,6 +73,26 @@ var deleteUser = function (id) {
         }),
         success: function (result) {
           list.removeChild(item);
+        },
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+      });
+    }
+    }
+  });
+};
+
+var logout = function(){
+ons.notification.confirm({
+    message: 'Are you sure you want to logout?',
+    callback: function(answer) {    
+    if(answer == 1)
+    {
+        $.ajax({
+        type: "GET",
+        url: "../api/logout.php",      
+        success: function (result) {
+         location.href = 'login.php';
         },
         contentType: "application/json; charset=utf-8",
         dataType: "json"
