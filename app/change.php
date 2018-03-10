@@ -40,6 +40,9 @@
           </ons-toolbar-button>
         </div>
         <div class="center">Change Password</div>
+        <div class="right">
+          <div id="currentUser" style="margin-right: 10px;"></div>
+        </div>
       </ons-toolbar>
       <div style="text-align: center; margin-top: 30px;">
         <p>

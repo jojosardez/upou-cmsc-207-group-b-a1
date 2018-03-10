@@ -1,4 +1,5 @@
 <?php
+session_start();
 $config = parse_ini_file('config.ini');
 
 
@@ -11,7 +12,7 @@ try {
 	$statement->bindParam(':id', $id);
 	$statement->execute();
 	$results=$statement->fetchAll(PDO::FETCH_ASSOC);
-    print_r(json_encode($results));
+	print_r(json_encode(array($_SESSION,$results)));	
 } catch (Exception $e) {
     header('Content-Type: application/json');
     print_r(json_encode("An error was encountered while saving the user record: " . $e->getMessage()));

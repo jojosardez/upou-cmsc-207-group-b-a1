@@ -1,4 +1,5 @@
 document.addEventListener("init", function (event) {
+  showModal();
   loadUsers();
 });
 
@@ -12,8 +13,8 @@ var loadUsers = function () {
       type: "GET",
       url: "../api/admin.php",
       success: function (result) {
-        var username = document.getElementById('currentUser');
-        username.innerHTML = 'Current user: ' + result[0]['user'];
+        hideModal();
+        setUserDisplay(result[0]['user']);
 
         if (result[0]['admin'] === "1") {
           list.setAttribute('style', "visibility: visible;");
@@ -39,6 +40,7 @@ var loadUsers = function () {
 
             var editButton = document.createElement('ons-button');
             editButton.setAttribute('onclick', "location.href = 'edit.php?id=" + element['id'] + "'");
+            editButton.setAttribute('style', "margin-right: 10px;");
             editButton.innerHTML = "Edit";
             div.appendChild(editButton);
 
@@ -70,6 +72,7 @@ var deleteUser = function (id) {
     message: 'Are you sure you want to delete user?',
     callback: function (answer) {
       if (answer == 1) {
+        showModal();
         var list = document.getElementById('usersList');
         var item = document.getElementById(id);
 
@@ -80,6 +83,7 @@ var deleteUser = function (id) {
             id: id,
           }),
           success: function (result) {
+            hideModal();
             list.removeChild(item);
           },
           contentType: "application/json; charset=utf-8",

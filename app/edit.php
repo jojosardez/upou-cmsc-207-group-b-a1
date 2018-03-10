@@ -40,6 +40,9 @@
           </ons-toolbar-button>
         </div>
         <div class="center">Edit Account</div>
+        <div class="right">
+          <div id="currentUser" style="margin-right: 10px;"></div>
+        </div>
       </ons-toolbar>
       <div style="text-align: center; margin-top: 30px;">
         <p>
@@ -67,15 +70,15 @@
       <div class="footer">
         <p><small>&copy; CMSC-207 - Group B - Login Module</small></p>
       </div>
-      <ons-modal direction="up">
-        <div style="text-align: center">
-          <p>
-            <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Loading...
-          </p>
-        </div>
-      </ons-modal>
     </ons-page>
   </template>
+  <ons-modal direction="up">
+    <div style="text-align: center">
+      <p>
+        <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Loading...
+      </p>
+    </div>
+  </ons-modal>
 </body>
 
 </html>

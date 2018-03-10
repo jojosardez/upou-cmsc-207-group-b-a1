@@ -1,7 +1,12 @@
 var id = 0,
   prevEmail = '';
+var pageInitialized = false;
 
 document.addEventListener("init", function (event) {
+  if (pageInitialized) return;
+  pageInitialized = true;
+
+  showModal();
   var getId = window.location.search.substr(1).split("=")[1];
 
   if (getId != undefined) {
@@ -14,13 +19,16 @@ document.addEventListener("init", function (event) {
         id: id
       }),
       success: function (result) {
-        document.getElementById('username').value = result[0].username;
-        document.getElementById('email').value = result[0].email;
-        document.getElementById('active').checked = String(result[0].active) === "1";
-        document.getElementById('admin').checked = String(result[0].admin) === "1";
-        prevEmail = result[0].email;
+        hideModal();
+        setUserDisplay(result[0]['user']);
+        document.getElementById('username').value = result[1][0].username;
+        document.getElementById('email').value = result[1][0].email;
+        document.getElementById('active').checked = String(result[1][0].active) === "1";
+        document.getElementById('admin').checked = String(result[1][0].admin) === "1";
+        prevEmail = result[1][0].email;
       },
       error: function (error) {
+        hideModal();
         console.log(error);
       },
       contentType: 'application/json; charset=utf-8',

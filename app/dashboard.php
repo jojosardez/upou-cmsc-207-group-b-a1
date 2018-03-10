@@ -48,12 +48,14 @@
                 </div>
                 <div class="center">Dashboard</div>
                 <div class="right">
-                  <div id="currentUser"></div>
+                  <div id="currentUser" style="margin-right: 10px;"></div>
                 </div>
             </ons-toolbar>
 
-            <ons-button id="registerButton" onclick="location.href = 'register.php';" style="visibility: hidden;">Register New User</ons-button>          
-          
+            <div style="margin: 10px;">   
+              <ons-button id="registerButton" onclick="location.href = 'register.php';" style="visibility: hidden;">Register New User</ons-button>          
+            </div>
+
             <div style="text-align: center; margin-top: 30px;">      
                 <div id="userDetail" style="visibility: hidden;"></div>        
                 <ons-list id="usersList" modifier="inset" style="visibility: hidden;" onload="loadUsers(this)">

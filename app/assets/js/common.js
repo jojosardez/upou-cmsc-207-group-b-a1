@@ -34,6 +34,15 @@ var validatePassword = function (password) {
   return re.test(password);
 }
 
+var setUserDisplay = function (username) {
+  var userDiv = document.getElementById('currentUser');
+  var onsUserIcon = document.createElement('ons-icon');
+  onsUserIcon.setAttribute('icon', 'md-account-circle');
+  onsUserIcon.setAttribute('style', "margin-right: 5px;");
+  userDiv.appendChild(onsUserIcon);
+  userDiv.appendChild(document.createTextNode(username));
+}
+
 var logout = function () {
   ons.notification.confirm({
     message: 'Are you sure you want to logout?',
