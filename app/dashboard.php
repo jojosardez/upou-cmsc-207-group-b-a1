@@ -25,7 +25,6 @@
         <ons-list>
           <ons-list-item onclick="location.href = 'dashboard.php';" tappable>
             Dashboard  
-
           </ons-list-item>
           <ons-list-item onclick="location.href = 'change.php';" tappable>
             Change Password
@@ -52,11 +51,11 @@
                 </div>
             </ons-toolbar>
 
-            <ons-button onclick="location.href = 'register.php';">Register New User</ons-button>          
+            <ons-button id="registerButton" onclick="location.href = 'register.php';" style="visibility: hidden;">Register New User</ons-button>          
           
-            <div style="text-align: center; margin-top: 30px;">
-              
-                <ons-list id="usersList" modifier="inset" onload="loadUsers(this)">
+            <div style="text-align: center; margin-top: 30px;">      
+                <div id="userDetail" style="visibility: hidden;"></div>        
+                <ons-list id="usersList" modifier="inset" style="visibility: hidden;" onload="loadUsers(this)">
                     <ons-list-header>Users</ons-list-header>
                 </ons-list>
             </div>
