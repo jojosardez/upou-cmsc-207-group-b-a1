@@ -60,7 +60,7 @@ if (mysqli_num_rows($result) == 1) {
                 $response['message'] = "Username or password invalid.";
             }
         } else {
-            $_SESSION["email"] = $row['email'];
+            $_SESSION["lockeduser"] = $username;
             $response['errorcode'] = 2000;
             $response['message'] = "Your account was locked out due to too many login attempts. Would you like to unlock it using your registered email address?";
         }
