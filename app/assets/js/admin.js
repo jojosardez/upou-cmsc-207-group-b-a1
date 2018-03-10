@@ -4,6 +4,8 @@ document.addEventListener("init", function (event) {
 
 var loadUsers = function () {
     var list = document.getElementById('usersList');
+    var register = document.getElementById('registerButton');
+    var userDetail = document.getElementById('userDetail');
 
     if (list) {
         $.ajax({
@@ -12,6 +14,11 @@ var loadUsers = function () {
             success: function (result) {
                 var username = document.getElementById('currentUser');
                 username.innerHTML = 'Current user: ' + result[0]['user'];
+
+                if(result[0]['admin'] === "1")
+                {
+                list.setAttribute('style', "visibility: visible;"); 
+                register.setAttribute('style', "visibility: visible;"); 
 
                 $.each(result[1], function(index, element) {
                   var onsItem = document.createElement('ons-list-item');
@@ -48,7 +55,11 @@ var loadUsers = function () {
 
                   list.appendChild(onsItem);
                 });
-              
+              }
+              else{
+                 userDetail.setAttribute('style', "visibility: visible;"); 
+                 userDetail.innerHTML = "Welcome " + result[0]['user'] + '!';
+              }
             },
 
             dataType: "json"
