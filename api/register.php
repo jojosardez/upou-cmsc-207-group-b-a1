@@ -50,9 +50,7 @@ try {
                                     `loginattempts` = :loginattempts,
                                     `admin` = :admin,
                                     `active` = :active,
-                                    `verified` = :verified,
-                                    `datemodified` = :datemodified,
-                                    `token` = :token
+                                    `datemodified` = :datemodified
                                     WHERE `users`.`id` = :id";
     }
 
@@ -62,13 +60,13 @@ try {
     $statement->bindParam(':loginattempts', $loginattempts);
     $statement->bindParam(':admin', $admin);
     $statement->bindParam(':active', $active);
-    $statement->bindParam(':verified', $verified);
     $statement->bindParam(':datemodified', $datemodified);
-    $statement->bindParam(':token', $token);
 
     if ($id == 0) {
         $statement->bindParam(':datecreated', $datecreated);
         $statement->bindParam(':password', $encryptedPassword);
+	    $statement->bindParam(':verified', $verified);
+	    $statement->bindParam(':token', $token);
     } else {
         $statement->bindParam(':id', $id);
     }
