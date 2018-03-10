@@ -33,3 +33,22 @@ var validatePassword = function (password) {
   var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,20})/;
   return re.test(password);
 }
+
+var logout = function () {
+  ons.notification.confirm({
+    message: 'Are you sure you want to logout?',
+    callback: function (answer) {
+      if (answer == 1) {
+        $.ajax({
+          type: "GET",
+          url: "../api/logout.php",
+          success: function (result) {
+            location.href = 'login.php';
+          },
+          contentType: "application/json; charset=utf-8",
+          dataType: "json"
+        });
+      }
+    }
+  });
+};

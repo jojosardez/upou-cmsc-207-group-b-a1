@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <title>Edit Account | CMSC-207 - Group B - Login Module</title>
   <link rel="stylesheet" href="assets/lib/onsenui/css/onsenui.css">
   <link rel="stylesheet" href="assets/lib/onsenui/css/onsen-css-components.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
@@ -22,7 +23,7 @@
           <ons-list-item onclick="location.href = 'change.php';" tappable>
             Change Password
           </ons-list-item>
-          <ons-list-item onclick="location.href = 'login.php';" tappable>
+          <ons-list-item onclick="logout()" tappable>
             Logout
           </ons-list-item>
         </ons-list>

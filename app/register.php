@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <title>Register | CMSC-207 - Group B - Login Module</title>
   <link rel="stylesheet" href="assets/lib/onsenui/css/onsenui.css">
   <link rel="stylesheet" href="assets/lib/onsenui/css/onsen-css-components.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
