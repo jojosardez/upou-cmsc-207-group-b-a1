@@ -62,9 +62,9 @@
           </div>
         </p>
         <p style="margin-top: 30px;">
-          <ons-button onclick="save()">Save</ons-button>
-          &nbsp;
           <ons-button onclick="goBack()">Cancel</ons-button>
+          &nbsp;
+          <ons-button onclick="save()">Save</ons-button>
         </p>
       </div>
       <div class="footer">

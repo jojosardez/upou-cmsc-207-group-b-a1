@@ -55,7 +55,9 @@
           <ons-input id="newPasswordRepeat" modifier="underbar" type="password" placeholder="Repeat New Password" size="35" required float></ons-input>
         </p>
         <p style="margin-top: 30px;">
-          <ons-button onclick="change()">Change Password</ons-button>
+          <ons-button onclick="goBack()">Cancel</ons-button>
+          &nbsp;
+          <ons-button onclick="change()">Save</ons-button>
         </p>
       </div>
       <div class="footer">

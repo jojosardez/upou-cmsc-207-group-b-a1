@@ -46,9 +46,9 @@
           <ons-input id="usernameOrEmail" modifier="underbar" placeholder="Username or Email Address" size="35" required float></ons-input>
         </p>
         <p style="margin-top: 30px;">
-          <ons-button onclick="reset()">Reset Password</ons-button>
-          &nbsp;
           <ons-button onclick="goBack()">Cancel</ons-button>
+          &nbsp;
+          <ons-button onclick="reset()">Reset Password</ons-button>
         </p>
       </div>
       <div class="footer">
