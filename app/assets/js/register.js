@@ -1,15 +1,18 @@
 var id = 0,
-  prevEmail = '';
+  prevEmail = '',
+  addByAdmin = false;
 var pageInitialized = false;
 
 document.addEventListener("init", function (event) {
+  hideModal();
   if (pageInitialized) return;
   pageInitialized = true;
 
   showModal();
   var getId = window.location.search.substr(1).split("=")[1];
-
-  if (getId != undefined) {
+  if (getId === 'add') {
+    addByAdmin = true;
+  } else if (getId != undefined) {
     id = getId;
 
     $.ajax({
@@ -102,6 +105,7 @@ var registerAccount = function (username, password, email, active, admin) {
       password: password,
       email: email,
       id: id,
+      addByAdmin: addByAdmin,
       prevEmail: prevEmail,
       active: active,
       admin: admin
@@ -115,10 +119,10 @@ var registerAccount = function (username, password, email, active, admin) {
             'Success!' : 'Failed!',
           callback: function () {
             if (success) {
-              if (id === 0) {
-                document.location.href = "../app/login.php";
-              } else {
+              if (id > 0 || addByAdmin) {
                 document.location.href = "../app/dashboard.php";
+              } else {
+                document.location.href = "../app/login.php";
               }
             }
           }

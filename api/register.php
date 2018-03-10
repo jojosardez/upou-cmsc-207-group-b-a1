@@ -14,6 +14,7 @@ $config = parse_ini_file('config.ini');
 // Extract posted data and prepare data
 $input = json_decode(file_get_contents('php://input'), true);
 $id = trim($input['id']);
+$addByAdmin = $input['addByAdmin'];
 $prevEmail = trim($input['prevEmail']);
 $username = trim($input['username']);
 $password = trim($input['password']);
@@ -106,7 +107,11 @@ try {
     $response['success'] = true;
 
     if ($prevEmail != $email) {
-        $response['message'] = 'Please check your email for the verification link.';
+        if ($addByAdmin) {
+            $response['message'] = 'The user will receive an email containing the verification link.';
+        } else {
+            $response['message'] = 'Please check your email for the verification link.';
+        }
     } else {
         $response['message'] = 'User updated.';
     }

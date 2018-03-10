@@ -53,7 +53,7 @@
             </ons-toolbar>
 
             <div style="margin: 10px;">   
-              <ons-button id="registerButton" onclick="location.href = 'register.php';" style="visibility: hidden;">Register New User</ons-button>          
+              <ons-button id="registerButton" onclick="location.href = 'register.php?mode=add';" style="visibility: hidden;">Register New User</ons-button>          
             </div>
 
             <div style="text-align: center; margin-top: 30px;">      
