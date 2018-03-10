@@ -13,6 +13,10 @@
 </head>
 
 <body>
+  <?php
+    session_start();
+    if (!isset($_SESSION['user'])) { header('Location: login.php'); }
+  ?>
   <ons-splitter>
     <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
       <ons-page>
