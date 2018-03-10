@@ -75,7 +75,7 @@
   <ons-modal direction="up">
     <div style="text-align: center">
       <p>
-        <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Loading...
+        <ons-icon icon="md-spinner" size="28px" spin></ons-icon>
       </p>
     </div>
   </ons-modal>
