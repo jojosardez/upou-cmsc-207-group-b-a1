@@ -20,7 +20,7 @@ var verifyAccount = function () {
 
     $.ajax({
         type: 'POST',
-        url: '../api/verify.php',
+        url: '../api/registerVerify.php',
         data: JSON.stringify({
             encodedUsername: encodedUsername,
             token: token

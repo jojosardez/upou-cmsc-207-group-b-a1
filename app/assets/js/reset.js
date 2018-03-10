@@ -71,7 +71,7 @@ var validateInput = function (password, repeatPassword) {
     if (password === "") {
         errorMessage = "Password should not be empty.";
     }
-    else if (validatePassword(password)) {
+    else if (!validatePassword(password)) {
         errorMessage = "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character, and must be between 8 and 50 characters in length.";
     }
     else if (repeatPassword === "") {
@@ -94,7 +94,7 @@ var validateInput = function (password, repeatPassword) {
 var resetPassword = function (encodedUsername, password) {
     $.ajax({
         type: 'POST',
-        url: '../api/resetSave.php',
+        url: '../api/resetSend.php',
         data: JSON.stringify({
             encodedUsername: encodedUsername,
             password: password
