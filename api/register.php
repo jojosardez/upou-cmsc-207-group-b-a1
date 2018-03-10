@@ -47,7 +47,6 @@ try {
     } else {
         $query = "UPDATE `users` SET `username` = :username,
                                     `email` = :email,
-                                    `loginattempts` = :loginattempts,
                                     `admin` = :admin,
                                     `active` = :active,
                                     `datemodified` = :datemodified
@@ -57,7 +56,6 @@ try {
     $statement = $pdo->prepare($query);
     $statement->bindParam(':username', $username);
     $statement->bindParam(':email', $email);
-    $statement->bindParam(':loginattempts', $loginattempts);
     $statement->bindParam(':admin', $admin);
     $statement->bindParam(':active', $active);
     $statement->bindParam(':datemodified', $datemodified);
@@ -65,8 +63,9 @@ try {
     if ($id == 0) {
         $statement->bindParam(':datecreated', $datecreated);
         $statement->bindParam(':password', $encryptedPassword);
-	    $statement->bindParam(':verified', $verified);
-	    $statement->bindParam(':token', $token);
+        $statement->bindParam(':loginattempts', $loginattempts);
+        $statement->bindParam(':verified', $verified);
+        $statement->bindParam(':token', $token);
     } else {
         $statement->bindParam(':id', $id);
     }
