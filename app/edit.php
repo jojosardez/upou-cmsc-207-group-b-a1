@@ -48,6 +48,16 @@
         <p>
           <ons-input id="email" modifier="underbar" placeholder="Email Address" size="35" required float></ons-input>
         </p>
+        <p>
+          <div style="vertical-align: middle;">
+            <div style="display: inline; padding: 10px;">Active:</div><div style="display: inline;"><ons-switch id="active"></ons-switch></div>
+          </div>
+        </p>
+        <p>
+          <div style="vertical-align: middle;">
+            <div style="display: inline; padding: 10px;">Admin:</div><div style="display: inline;"><ons-switch id="admin"></ons-switch></div>
+          </div>
+        </p>
         <p style="margin-top: 30px;">
           <ons-button onclick="save()">Save</ons-button>
           &nbsp;

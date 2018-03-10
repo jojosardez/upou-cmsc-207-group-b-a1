@@ -20,8 +20,8 @@ $password = trim($input['password']);
 $encryptedPassword = password_hash($password, PASSWORD_DEFAULT);
 $email = trim($input['email']);
 $loginattempts = 0;
-$admin = 0;
-$active = 0;
+$admin = $input['admin'];
+$active = $input['active'];
 $verified = 0;
 $datecreated = date('Y-m-d H:i:s');
 $datemodified = date('Y-m-d H:i:s');
@@ -41,14 +41,11 @@ try {
     // Insert user record
     $query = "";
 
-    if($id == 0)
-    {
+    if ($id == 0) {
         $query = "INSERT INTO users (username, password, email, loginattempts, admin, active, verified, datecreated, datemodified, token)
                 VALUES (:username, :password, :email, :loginattempts, :admin, :active, :verified, :datecreated, :datemodified, :token)";
-    }
-    else
-    {
-        $query = "UPDATE `users` SET `username` = :username, 
+    } else {
+        $query = "UPDATE `users` SET `username` = :username,
                                     `email` = :email,
                                     `loginattempts` = :loginattempts,
                                     `admin` = :admin,
@@ -69,12 +66,10 @@ try {
     $statement->bindParam(':datemodified', $datemodified);
     $statement->bindParam(':token', $token);
 
-    if($id == 0)
-    {
+    if ($id == 0) {
         $statement->bindParam(':datecreated', $datecreated);
         $statement->bindParam(':password', $encryptedPassword);
-    }
-    else{
+    } else {
         $statement->bindParam(':id', $id);
     }
 
@@ -82,7 +77,7 @@ try {
 
     // Send confirmation email
 
-    if($prevEmail != $email){
+    if ($prevEmail != $email) {
         $mail = new PHPMailer;
         $mail->SMTPOptions = array(
             'ssl' => array(
@@ -113,12 +108,9 @@ try {
     // Set successful response
     $response['success'] = true;
 
-    if($prevEmail != $email)
-    {
+    if ($prevEmail != $email) {
         $response['message'] = 'Please check your email for the verification link.';
-    }
-    else
-    {
+    } else {
         $response['message'] = 'User updated.';
     }
 } catch (PDOException $pe) {
