@@ -2,7 +2,6 @@
 <html>
 
 <head>
-  <title>Change Password | CMSC-207 - Group B - Login Module</title>
   <link rel="stylesheet" href="assets/lib/onsenui/css/onsenui.css">
   <link rel="stylesheet" href="assets/lib/onsenui/css/onsen-css-components.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
@@ -13,10 +12,10 @@
 </head>
 
 <body>
-  <?php
+	<?php
     session_start();
     if (!isset($_SESSION['user'])) { header('Location: login.php'); }
-  ?>
+  	?>
   <ons-splitter>
     <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
       <ons-page>
@@ -27,7 +26,7 @@
           <ons-list-item onclick="location.href = 'change.php';" tappable>
             Change Password
           </ons-list-item>
-          <ons-list-item onclick="logout()" tappable>
+          <ons-list-item onclick="location.href = 'login.php';" tappable>
             Logout
           </ons-list-item>
         </ons-list>
@@ -44,9 +43,6 @@
           </ons-toolbar-button>
         </div>
         <div class="center">Change Password</div>
-        <div class="right">
-          <div id="currentUser" style="margin-right: 10px;"></div>
-        </div>
       </ons-toolbar>
       <div style="text-align: center; margin-top: 30px;">
         <p>
@@ -59,9 +55,8 @@
           <ons-input id="newPasswordRepeat" modifier="underbar" type="password" placeholder="Repeat New Password" size="35" required float></ons-input>
         </p>
         <p style="margin-top: 30px;">
-          <ons-button onclick="goBack()">Cancel</ons-button>
-          &nbsp;
-          <ons-button onclick="change()">Save</ons-button>
+          <ons-button onclick="change()">Change Password</ons-button>
+          <ons-button onclick="location.href = 'dashboard.php';" tappable>Go back to dashboard</ons-button>
         </p>
       </div>
       <div class="footer">
