@@ -27,7 +27,7 @@
           <ons-list-item onclick="location.href = 'change.php';" tappable>
             Change Password
           </ons-list-item>
-          <ons-list-item onclick="logout()" tappable>
+          <ons-list-item onclick="logout(true)" tappable>
             Logout
           </ons-list-item>
         </ons-list>

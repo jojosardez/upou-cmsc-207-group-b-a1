@@ -1,67 +1,79 @@
 <?php
-$input = json_decode(file_get_contents('php://input'), true);
-$username = trim($input['username']);
-$currentPassword = trim($input['currentPassword']);
-$newPassword = trim($input['newPassword']);
-$encryptedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-$datemodified = date('Y-m-d H:i:s');
+// Start session
+session_start();
 
-//print_r(json_encode("This message was returned by the change password api. Received username = " . $username . ", currentPassword = " . $currentPassword . ", newPassword = " . $newPassword . "."));
-
-
+// Load configuration
 $config = parse_ini_file('config.ini');
 
+// Extract posted data and prepare data
+$input = json_decode(file_get_contents('php://input'), true);
+$username = $_SESSION["user"];
+$currentPassword = $input['currentPassword'];
+$newPassword = password_hash($input['newPassword'], PASSWORD_DEFAULT);
 $response = [
     'success' => false,
     'errorcode' => 0,
     'message' => '',
 ];
 
-// var con -> establish a connection to database assignment1db
-$con = mysqli_connect($config['db_server'], $config['db_user'], $config['db_password'], $config['db_name']);
-// test if you can connect to database | if not die
-if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-// Prepare statement to test if input $username is available in the database
-$sql = "SELECT * FROM `users` WHERE username = '$username'";
+try {
+    $pdo = new PDO('mysql:host=' . $config['db_server'] . ';dbname=' . $config['db_name'], $config['db_user'], $config['db_password']);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->beginTransaction();
 
-// result -> is the result of the query of $sql
-$result = mysqli_query($con, $sql);
+    // Check user record
+    $query = "SELECT * FROM users WHERE LCASE(username) = LCASE(:username) LIMIT 1";
+    $statement = $pdo->prepare($query);
+    $statement->bindParam(':username', $username);
+    $result = $statement->execute();
 
-            // set the session for current user | set session "CURRENT_user" as 'id' from table users
-            if (password_verify($password, $row['password'])) {
-            	// change password db
-                $sql = "UPDATE `users` SET password = '" . $encryptedPassword . "' WHERE username='" . $username . "'";
-                // result -> is the result of the query of $sql
-                $result = $con->query($sql);
-                // update date modified
-                $sql = "UPDATE `users` SET datemodified = " . $datemodified . " WHERE username='" . $username . "'";
-                // result -> is the result of the query of $sql
-                $result = $con->query($sql);
+    if ($statement->rowCount() === 0) {
+        // Record not found
+        $response['errorcode'] = 1;
+        $response['message'] = 'There were no user account found with the given details.';
+    } else {
+        // Get username and email
+        $record = $statement->fetchAll();
+        $password = $record[0]['password'];
 
-                $response['success'] = true;
-                $response['message'] = "Password changed";
-            } else {
-                $row['loginattempts'] = $row['loginattempts'] + 1;
-                $sql = "UPDATE `users` SET loginattempts = " . $row['loginattempts'] . " WHERE username='" . $username . "'";
-                // result -> is the result of the query of $sql
-                $result = $con->query($sql);
-                $response['errorcode'] = 1000;
-                $response['message'] = "Password invalid.";
-            }
+        // Check if passwords are same
+        if (password_verify($currentPassword, $password)) {
+            // Update user record
+            $query = "UPDATE users SET password = :password, datemodified = :datemodified WHERE LCASE(username) = LCASE(:username)";
+            $statement = $pdo->prepare($query);
+            $datemodified = date('Y-m-d H:i:s');
+            $statement->bindParam(':datemodified', $datemodified);
+            $statement->bindParam(':username', $username);
+            $statement->bindParam(':password', $newPassword);
+            $result = $statement->execute();
+
+            // Commit transaction
+            $pdo->commit();
+
+            // Set successful response
+            $response['success'] = true;
+            $response['message'] = 'Please login with your new password.';
+        } else {
+            $response['message'] = 'The current password you have provided didn\'t match with the one you have in record.';
         }
     }
-}
-// Username doesn't exist in the table users
-else {
-    // print a JSON "false" | will be read by login.js
+} catch (PDOException $pe) {
+    // Set failure response
+    $errorCode = $pe->getCode();
+    $response['errorcode'] = $errorCode;
+    if ((string) $errorCode === '2002') {
+        $response['message'] = 'The database couldn\'t be reached. Please inform the administrator.';
+    } else if ((string) $errorCode === '1045') {
+        $response['message'] = 'The database credentials are incorrect. Please inform the administrator.';
+    } else {
+        $response['message'] = $pe->getMessage() . ' Please inform the administrator.';
+    }
+} catch (Exception $e) {
+    // Set failure response
     $response['errorcode'] = 1000;
-    $response['message'] = "Username or password invalid.";
+    $response['message'] = $e->getMessage();
 }
 
-$con->close();
-
+// Return response
 header('Content-Type: application/json');
 print_r(json_encode($response));
-

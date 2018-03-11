@@ -43,21 +43,29 @@ var setUserDisplay = function (username) {
   userDiv.appendChild(document.createTextNode(username));
 }
 
-var logout = function () {
-  ons.notification.confirm({
-    message: 'Are you sure you want to logout?',
-    callback: function (answer) {
-      if (answer == 1) {
-        $.ajax({
-          type: "GET",
-          url: "../api/logout.php",
-          success: function (result) {
-            location.href = 'login.php';
-          },
-          contentType: "application/json; charset=utf-8",
-          dataType: "json"
-        });
+var logout = function (showconfirm) {
+  if (showconfirm) {
+    ons.notification.confirm({
+      message: 'Are you sure you want to logout?',
+      callback: function (answer) {
+        if (answer == 1) {
+          logoutProceed();
+        }
       }
-    }
-  });
+    });
+  } else {
+    logoutProceed();
+  }
 };
+
+var logoutProceed = function () {
+  $.ajax({
+    type: "GET",
+    url: "../api/logout.php",
+    success: function (result) {
+      location.href = 'login.php';
+    },
+    contentType: "application/json; charset=utf-8",
+    dataType: "json"
+  });
+}
